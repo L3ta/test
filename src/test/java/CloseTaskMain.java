@@ -1,4 +1,3 @@
-import io.qameta.allure.Description;
 import io.qameta.allure.Step;
 import org.example.CloseTask;
 import org.example.KanboardApiAuth;
@@ -13,19 +12,18 @@ public class CloseTaskMain {
     private UserManager userManager;
 
     @BeforeClass
-    @Step("Ініціалізація користувача")
     public void setUp() {
         userManager = new UserManager();
     }
 
+    @Step("Executing closeTaskTest")
     @Test
-    @Description("Тест на закриття задачі")
-    @Step("Запуск тесту на закриття задачі")
     public void closeTaskTest() {
-        String ownerId = createUser(); // Create user and get userId
+        String ownerId = userManager.createUser(); // Create user and get userId
 
         if (ownerId != null) {
-            String projectId = createProject(ownerId); // Create project and get projectId
+            ProjectManager projectManager = new ProjectManager();
+            String projectId = projectManager.createProject(ownerId); // Create project and get projectId
 
             if (projectId != null) {
                 CloseTask loginManager = new CloseTask();
@@ -41,8 +39,8 @@ public class CloseTaskMain {
                 String taskId = loginManager.getCreatedTaskId();
                 if (taskId != null) {
                     KanboardApiAuth apiAuth = new KanboardApiAuth(userManager.getUsername(), userManager.getPassword());
-                    deleteTask(apiAuth, taskId); // Delete task
-                    deleteProject(apiAuth, projectId); // Delete project
+                    apiAuth.deleteTask(taskId); // Delete task
+                    apiAuth.deleteProject(projectId); // Delete project
                 }
 
                 // Close the browser
@@ -50,40 +48,13 @@ public class CloseTaskMain {
             }
 
             // Delete user via API
-            deleteUser(); // Delete user
+            userManager.deleteUser(); // Delete user
         } else {
             System.out.println("User creation failed. Aborting.");
         }
     }
 
-    @Step("Створення користувача")
-    private String createUser() {
-        return userManager.createUser(); // Create user and get userId
-    }
-
-    @Step("Створення проекту з ідентифікатором власника: {ownerId}")
-    private String createProject(String ownerId) {
-        ProjectManager projectManager = new ProjectManager();
-        return projectManager.createProject(ownerId); // Create project and get projectId
-    }
-
-    @Step("Видалення задачі з ідентифікатором: {taskId}")
-    private void deleteTask(KanboardApiAuth apiAuth, String taskId) {
-        apiAuth.deleteTask(taskId); // Delete task
-    }
-
-    @Step("Видалення проекту з ідентифікатором: {projectId}")
-    private void deleteProject(KanboardApiAuth apiAuth, String projectId) {
-        apiAuth.deleteProject(projectId); // Delete project
-    }
-
-    @Step("Видалення користувача")
-    private void deleteUser() {
-        userManager.deleteUser(); // Delete user
-    }
-
     @AfterClass
-    @Step("Очистка після тесту")
     public void tearDown() {
         // Any cleanup code if needed
     }

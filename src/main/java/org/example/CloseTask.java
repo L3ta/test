@@ -21,7 +21,7 @@ public class CloseTask {
     public void loginToKanboard(String username, String password, String browser) {
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless"); // Додаємо headless режим
+            //options.addArguments("--headless"); // Додаємо headless режим
             driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("firefox")) {
             FirefoxOptions options = new FirefoxOptions();
