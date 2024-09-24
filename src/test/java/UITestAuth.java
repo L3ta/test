@@ -64,7 +64,7 @@ public class UITestAuth {
     public boolean loginToKanboard(String username, String password) {
         try {
             // Додаємо затримку перед пошуком елементів
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
 
             // Знаходимо поле для введення логіна
             WebElement loginField = driver.findElement(By.name("username"));
@@ -72,7 +72,7 @@ public class UITestAuth {
             loginField.sendKeys(username);
 
             // Затримка перед введенням пароля
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
 
             // Знаходимо поле для введення пароля
             WebElement passwordField = driver.findElement(By.name("password"));
@@ -80,7 +80,7 @@ public class UITestAuth {
             passwordField.sendKeys(password);
 
             // Затримка перед натисканням кнопки входу
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
 
             // Натискаємо на кнопку входу
             WebElement loginButton = driver.findElement(By.xpath("//button[@type='submit']"));
