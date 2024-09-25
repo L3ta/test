@@ -29,7 +29,7 @@ public class UITestAuth {
             //options.addArguments("--headless"); // Запуск у безголовому режимі
             driver = new FirefoxDriver(options);
         }
-        driver.get("http://localhost/kanboard"); // Заміни на реальну URL свого Kanboard
+        driver.get("https://192.168.10.173/kanboard"); // Заміни на реальну URL свого Kanboard
     }
 
     @Test
